@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #fff;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .envelope::after {
+            content: '💌';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            font-size: 60px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .click-text {
+            color: white;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .letter {
+            display: none;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            text-align: left;
+            line-height: 1.8;
+            color: #333;
+            position: relative;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease;
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .letter h1 {
+            color: #764ba2;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .letter p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .letter p:nth-child(2) { animation-delay: 0.2s; }
+        .letter p:nth-child(3) { animation-delay: 0.4s; }
+        .letter p:nth-child(4) { animation-delay: 0.6s; }
+        .letter p:nth-child(5) { animation-delay: 0.8s; }
+        .letter p:nth-child(6) { animation-delay: 1.0s; }
+        .letter p:nth-child(7) { animation-delay: 1.2s; }
+        .letter p:nth-child(8) { animation-delay: 1.4s; }
+        .letter p:nth-child(9) { animation-delay: 1.6s; }
+        .letter p:nth-child(10) { animation-delay: 1.8s; }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-style: italic;
+            color: #764ba2;
+            font-size: 1.2rem;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255,255,255,0.3);
+            font-size: 20px;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .visible {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div id="hearts"></div>
+
+    <!-- Envelope view -->
+    <div class="container" id="envelopeView">
+        <div class="envelope" onclick="openLetter()"></div>
+        <p class="click-text">Click to open your message</p>
+    </div>
+
+    <!-- Letter view -->
+    <div class="letter" id="letterView">
+        <h1>A Message For You</h1>
+        
+        <p>Hi,</p>
+        
+        <p>There is something I've wanted to say properly for a long time.</p>
+        
+        <p>We met during NYSC, and although life took us in different directions afterward, one thing never really changed—I always looked forward to hearing from you.</p>
+        
+        <p>Over the years, I've come to admire more than just your smile or your beauty. I've admired your character, your strength, your kindness, and the way you carry yourself. Every conversation with you has reminded me why I was drawn to you in the first place.</p>
+        
+        <p>The truth is, when I told you I liked you during NYSC, those feelings were real. What surprises me is that after all this time, they never completely went away.</p>
+        
+        <p>This message isn't meant to put you under pressure or demand an answer. I simply believe that some feelings deserve honesty, and you deserve to know the truth.</p>
+        
+        <p>So here it is:</p>
+        
+        <p><strong>I still like you.</strong></p>
+        
+        <p>Not because of a fleeting crush.<br>
+        Not because I'm lonely.<br>
+        Not because years have passed.</p>
+        
+        <p>I like you because every time I think about the kind of person I'd genuinely want to know better, spend time with, and build something meaningful with, your name always comes to mind.</p>
+        
+        <p>Whatever you feel, I respect it completely.</p>
+        
+        <p>But I didn't want another year to pass without letting you know that meeting you during NYSC remains one of the best things that happened to me, and that you continue to hold a special place in my heart.</p>
+        
+        <p>Thank you for being you.</p>
+        
+        <div class="signature">— Teejay</div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💜', '💖', '💕', '💗', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+
+        function openLetter() {
+            document.getElementById('envelopeView').classList.add('hidden');
+            document.getElementById('letterView').classList.add('visible');
+            createHearts();
+        }
+    </script>
+</body>
+</html>
